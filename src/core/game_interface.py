@@ -1,0 +1,9 @@
+from typing import Protocol
+
+
+class GameInterface(Protocol):
+    def prompt_input(self) -> str: ...
+
+    def put_character(self, char: str) -> None: ...
+
+    def put_string(self, text: str, delay_ms: int = 0) -> None: ...

@@ -1,0 +1,38 @@
+[project]
+name = "aoc-py"
+version = "0.1.0"
+description = "Advent Of Code with Python"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
+    "ruff>=0.12.2",
+    "taskipy>=1.14.1",
+]
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+ignore = ["PLR2004"]
+
+[tool.pytest.ini_options]
+pythonpath = "."
+
+[tool.coverage.run]
+omit = ["**/test_*.py", "**/tests/*"]
+
+[tool.taskipy.tasks]
+pre_format = "ruff check --fix"
+format = "ruff format"
+run = "python main.py"
+pre_test = "ruff check"
+test = "pytest -s -x --cov=src -vv"
+post_test = "coverage html"
+setup_solution = "python src/scripts/setup_solution.py"

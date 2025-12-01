@@ -1,7 +1,7 @@
 from typing import Iterator
 
 from src.core.input_reader import InputReader
-from src.solutions.y2025.d01.logic.dial_instruction import (
+from src.solutions.y2025.d01.logic.turn_dial import (
     DialInstruction,
     TurnDirection,
 )

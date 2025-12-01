@@ -1,8 +1,8 @@
-from src.solutions.y2025.d01.logic.dial_instruction import (
+from src.solutions.y2025.d01.logic.parser import parse_dial_instructions
+from src.solutions.y2025.d01.logic.turn_dial import (
     DialInstruction,
     TurnDirection,
 )
-from src.solutions.y2025.d01.logic.parser import parse_dial_instructions
 
 
 def test_parse_dial_instructions(input_reader):

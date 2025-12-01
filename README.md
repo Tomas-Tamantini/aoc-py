@@ -73,3 +73,9 @@ task test
 ```bash
 task format
 ```
+
+### Setting up file structure for a new solution
+
+```bash
+task setup_solution -y 2099 -d 1
+```

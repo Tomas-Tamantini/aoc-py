@@ -1,11 +1,7 @@
-from src.solutions.y2025.d01.logic.parser import parse_dial_instructions
-from src.solutions.y2025.d01.logic.turn_dial import (
-    DialInstruction,
-    TurnDirection,
-)
+from src.solutions.y2025.d01.logic.parser import parse_dial_offsets
 
 
-def test_parse_dial_instructions(input_reader):
+def test_parse_dial_offsets(input_reader):
     reader = input_reader(
         """
         L1
@@ -14,10 +10,5 @@ def test_parse_dial_instructions(input_reader):
         R40
         """
     )
-    instructions = list(parse_dial_instructions(reader))
-    assert instructions == [
-        DialInstruction(turn_direction=TurnDirection.LEFT, step_count=1),
-        DialInstruction(turn_direction=TurnDirection.RIGHT, step_count=2),
-        DialInstruction(turn_direction=TurnDirection.LEFT, step_count=3),
-        DialInstruction(turn_direction=TurnDirection.RIGHT, step_count=40),
-    ]
+    offsets = list(parse_dial_offsets(reader))
+    assert offsets == [-1, 2, -3, 40]

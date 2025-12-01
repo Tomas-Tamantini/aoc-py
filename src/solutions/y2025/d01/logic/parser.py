@@ -1,19 +1,16 @@
 from typing import Iterator
 
 from src.core.input_reader import InputReader
-from src.solutions.y2025.d01.logic.turn_dial import (
-    DialInstruction,
-    TurnDirection,
-)
 
 
-def parse_dial_instruction(instruction: str) -> DialInstruction:
-    turn_direction = TurnDirection(instruction[0])
-    return DialInstruction(turn_direction, int(instruction[1:]))
+def _parse_dial_offset(instruction: str) -> int:
+    offset = int(instruction[1:])
+    if instruction[0] == "L":
+        return -offset
+    else:
+        return offset
 
 
-def parse_dial_instructions(
-    input_reader: InputReader,
-) -> Iterator[DialInstruction]:
+def parse_dial_offsets(input_reader: InputReader) -> Iterator[int]:
     for line in input_reader.read_stripped_lines():
-        yield parse_dial_instruction(line)
+        yield _parse_dial_offset(line)

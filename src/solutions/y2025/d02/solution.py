@@ -8,7 +8,8 @@ def solve(io_handler: IOHandler) -> None:
 
     ranges = list(parse_ranges(io_handler.input_reader(*prob_id)))
 
-    sum_invalid_ids = sum(sum(invalid_ids(*r)) for r in ranges)
+    total_p1 = sum(sum(invalid_ids(*r, multiplicity=2)) for r in ranges)
+    io_handler.write_result(*prob_id, part=1, result=total_p1)
 
-    io_handler.write_result(*prob_id, part=1, result=sum_invalid_ids)
-    io_handler.write_result(*prob_id, part=2, result="not implemented")
+    total_p2 = sum(sum(invalid_ids(*r, multiplicity=None)) for r in ranges)
+    io_handler.write_result(*prob_id, part=2, result=total_p2)

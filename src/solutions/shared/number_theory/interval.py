@@ -8,3 +8,8 @@ class Interval:
 
     def contains(self, number: int) -> bool:
         return self.min_inclusive <= number <= self.max_inclusive
+
+    def intersects(self, other: "Interval") -> bool:
+        return max(self.min_inclusive, other.min_inclusive) <= min(
+            self.max_inclusive, other.max_inclusive
+        )

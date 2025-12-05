@@ -20,3 +20,10 @@ def test_intervals_are_sorted_by_range_start():
 
     sorted_intervals = sorted([int_a, int_b, int_c])
     assert sorted_intervals == [int_b, int_c, int_a]
+
+
+def test_intervals_intersect_if_some_number_in_common():
+    assert Interval(10, 20).intersects(Interval(20, 30))
+    assert Interval(10, 20).intersects(Interval(5, 10))
+    assert Interval(10, 20).intersects(Interval(9, 21))
+    assert not Interval(10, 20).intersects(Interval(21, 30))

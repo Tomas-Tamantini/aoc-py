@@ -49,11 +49,21 @@ task run --interactive
 task run -i
 ```
 
+Use a specific profile for data folder (useful for multiple users or test data):
+
+```bash
+task run --profile tom
+task run -p tom
+```
+
+This will use `data/tom/` instead of the default `data/` folder for input files.
+
 Combine flags for specific solutions with special features:
 
 ```bash
 task run --year 2019 --day 13 --animate
 task run -y 2019 -d 25 -a -i
+task run --year 2022 --day 5 --profile test
 ```
 
 Get help:

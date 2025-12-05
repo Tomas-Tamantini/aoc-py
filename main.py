@@ -41,11 +41,20 @@ def main():
         action="store_true",
         help="Play some solutions as interactive games",
     )
+    parser.add_argument(
+        "--profile",
+        "-p",
+        type=str,
+        help="Profile name to use for data folder "
+        "(e.g., 'tom' will use 'data/tom/' instead of 'data/')",
+    )
 
     args = parser.parse_args()
 
     io_handler = CLIIOHandler(
-        play_animations=args.animate, play_games=args.interactive
+        play_animations=args.animate,
+        play_games=args.interactive,
+        profile=args.profile,
     )
 
     for year, day in parse_problem_ids(args.year, args.day):

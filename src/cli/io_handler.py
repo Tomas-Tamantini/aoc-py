@@ -13,17 +13,22 @@ from src.core.progress_monitor import ProgressMonitor
 
 
 class CLIIOHandler:
-    def __init__(self, play_animations: bool, play_games: bool):
-        self._result_checker = JsonResultChecker()
+    def __init__(
+        self,
+        play_animations: bool,
+        play_games: bool,
+        profile: Optional[str] = None,
+    ):
+        self._result_checker = JsonResultChecker(profile)
         self._output_writer = CLIOutputWriter()
         self._play_animations = play_animations
         self._play_games = play_games
+        self._profile = profile
 
-    @staticmethod
     def input_reader(
-        year: int, day: int, file_name: Optional[str] = None
+        self, year: int, day: int, file_name: Optional[str] = None
     ) -> InputReader:
-        return TextFileInputReader(year, day, file_name)
+        return TextFileInputReader(year, day, file_name, self._profile)
 
     def write_result(  # noqa: PLR0913, PLR0917
         self,

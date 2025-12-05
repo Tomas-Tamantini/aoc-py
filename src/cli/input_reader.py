@@ -3,11 +3,19 @@ from typing import Iterator, Optional
 
 
 class TextFileInputReader:
-    def __init__(self, year: int, day: int, file_name: Optional[str] = None):
+    def __init__(
+        self,
+        year: int,
+        day: int,
+        file_name: Optional[str] = None,
+        profile: Optional[str] = None,
+    ):
         file_name = file_name or "input.txt"
-        self._file_path = join(
-            "src", "solutions", f"y{year}", f"d{day:02d}", "data", file_name
-        )
+        path_elements = ["src", "solutions", f"y{year}", f"d{day:02d}", "data"]
+        if profile:
+            path_elements.append(profile)
+        path_elements.append(file_name)
+        self._file_path = join(*path_elements)
 
     def read_input(self) -> str:
         with open(self._file_path, "r", encoding="utf-8") as file:

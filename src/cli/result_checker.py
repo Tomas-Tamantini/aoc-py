@@ -1,22 +1,21 @@
 from json import load
 from os.path import join
+from typing import Optional
 
 from src.core.result_checker import ResultReport
 
 
 class JsonResultChecker:
-    def __init__(self) -> None:
+    def __init__(self, profile: Optional[str] = None) -> None:
         self._expected_results: dict[tuple[int, ...], str] = dict()
+        self._profile = profile
 
     def _load_solution(self, year: int, day: int) -> None:
-        file_path = join(
-            "src",
-            "solutions",
-            f"y{year}",
-            f"d{day:02d}",
-            "data",
-            "results.json",
-        )
+        path_elements = ["src", "solutions", f"y{year}", f"d{day:02d}", "data"]
+        if self._profile:
+            path_elements.append(self._profile)
+        path_elements.append("results.json")
+        file_path = join(*path_elements)
         try:
             with open(file_path, "r", encoding="utf-8") as file:
                 data = load(file)

@@ -36,8 +36,8 @@ def main():
         help="Play cool animations for some solutions",
     )
     parser.add_argument(
-        "--play",
-        "-p",
+        "--interactive",
+        "-i",
         action="store_true",
         help="Play some solutions as interactive games",
     )
@@ -45,7 +45,7 @@ def main():
     args = parser.parse_args()
 
     io_handler = CLIIOHandler(
-        play_animations=args.animate, play_games=args.play
+        play_animations=args.animate, play_games=args.interactive
     )
 
     for year, day in parse_problem_ids(args.year, args.day):

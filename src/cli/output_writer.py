@@ -22,6 +22,6 @@ class CLIOutputWriter:
         if suggest_animation:
             msg += " (SET FLAG --animate TO SEE COOL ANIMATION)"
         if suggest_play:
-            msg += " (SET FLAG --play TO PLAY AS INTERACTIVE GAME)"
+            msg += " (SET FLAG --interactive TO PLAY AS INTERACTIVE GAME)"
         CLIOutputWriter.clear_line()
         print(msg)

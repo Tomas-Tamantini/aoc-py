@@ -45,15 +45,15 @@ task run -a
 Run in interactive game mode (for supported solutions):
 
 ```bash
-task run --play
-task run -p
+task run --interactive
+task run -i
 ```
 
 Combine flags for specific solutions with special features:
 
 ```bash
 task run --year 2019 --day 13 --animate
-task run -y 2019 -d 25 -a -p
+task run -y 2019 -d 25 -a -i
 ```
 
 Get help:

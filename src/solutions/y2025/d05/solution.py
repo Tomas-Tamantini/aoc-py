@@ -1,7 +1,7 @@
 from src.core.io_handler import IOHandler
 from src.solutions.y2025.d05.logic.parser import (
     parse_ingredient_ids,
-    parse_number_ranges,
+    parse_intervals,
 )
 
 
@@ -10,10 +10,10 @@ def solve(io_handler: IOHandler) -> None:
 
     reader = io_handler.input_reader(*prob_id)
 
-    ranges = list(parse_number_ranges(reader))
+    intervals = list(parse_intervals(reader))
     ids = list(parse_ingredient_ids(reader))
 
-    total = sum(any(r.contains(id) for r in ranges) for id in ids)
+    total = sum(any(s.contains(id) for s in intervals) for id in ids)
 
     io_handler.write_result(*prob_id, part=1, result=total)
     io_handler.write_result(*prob_id, part=2, result="not implemented")

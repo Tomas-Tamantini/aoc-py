@@ -3,6 +3,10 @@ import pytest
 from src.solutions.shared.number_theory.interval import Interval
 
 
+def test_interval_size_is_member_count():
+    assert Interval(101, 900).size == 800
+
+
 @pytest.mark.parametrize("n", [1, 3, 4])
 def test_interval_contains_number_if_within_range(n):
     assert Interval(1, 4).contains(n)
@@ -22,8 +26,16 @@ def test_intervals_are_sorted_by_range_start():
     assert sorted_intervals == [int_b, int_c, int_a]
 
 
-def test_intervals_intersect_if_some_number_in_common():
-    assert Interval(10, 20).intersects(Interval(20, 30))
-    assert Interval(10, 20).intersects(Interval(5, 10))
-    assert Interval(10, 20).intersects(Interval(9, 21))
-    assert not Interval(10, 20).intersects(Interval(21, 30))
+@pytest.mark.parametrize(
+    ("interval_a", "interval_b", "intersection"),
+    [
+        (Interval(10, 20), Interval(30, 40), None),
+        (Interval(10, 20), Interval(15, 30), Interval(10, 30)),
+        (Interval(10, 20), Interval(10, 12), Interval(10, 20)),
+        (Interval(10, 20), Interval(5, 9), Interval(5, 20)),
+    ],
+)
+def test_interval_union_yields_new_interval_if_possible(
+    interval_a, interval_b, intersection
+):
+    assert interval_a.union(interval_b) == intersection

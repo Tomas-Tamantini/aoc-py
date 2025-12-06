@@ -9,7 +9,7 @@ def parse_grid(
     lines = list(input_reader.read_stripped_lines())
     height = len(lines)
     pos_to_symbol: dict[Vector2D, str] = {}
-    for y, line in enumerate(input_reader.read_stripped_lines()):
+    for y, line in enumerate(lines):
         for x, c in enumerate(line):
             y_coord = y if y_grows_down else height - 1 - y
             pos_to_symbol[Vector2D(x, y_coord)] = c

@@ -4,6 +4,7 @@ from typing import Iterator
 import pytest
 
 from src.solutions.shared.graph import (
+    DisjointSet,
     UndirectedGraph,
     bfs,
     dfs,
@@ -119,3 +120,21 @@ def test_optimal_path_with_dijkstra():
         weighted_neighbors=graph.weighted_neighbors,
     )
     assert path_length == 13
+
+
+def test_disjoint_set_starts_empty():
+    ds = DisjointSet()
+    with pytest.raises(KeyError):
+        ds.find("a")
+
+
+def test_disjoint_set_merges_elements():
+    ds = DisjointSet()
+    for element in ("a", "b", "c"):
+        ds.make_set(element)
+    assert ds.find("a") != ds.find("b")
+    assert ds.find("a") != ds.find("c")
+    ds.union("a", "b")
+    assert ds.find("a") == ds.find("b")
+    ds.union("b", "c")
+    assert ds.find("a") == ds.find("c")

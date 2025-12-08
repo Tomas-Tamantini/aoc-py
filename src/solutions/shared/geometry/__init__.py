@@ -5,6 +5,7 @@ from src.solutions.shared.geometry.hexagonal import (
     HexagonalDirection,
 )
 from src.solutions.shared.geometry.vector_2d import Vector2D
+from src.solutions.shared.geometry.vector_3d import Vector3D
 
 __all__ = [
     "BoundingBox",
@@ -13,4 +14,5 @@ __all__ = [
     "HexagonalDirection",
     "HexagonalCoordinates",
     "Vector2D",
+    "Vector3D",
 ]

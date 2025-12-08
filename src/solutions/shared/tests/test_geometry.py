@@ -7,6 +7,7 @@ from src.solutions.shared.geometry import (
     HexagonalDirection,
     Turn,
     Vector2D,
+    Vector3D,
 )
 
 
@@ -159,3 +160,9 @@ def test_hexagonal_position_has_six_neighbors():
         HexagonalCoordinates(10, 19),
         HexagonalCoordinates(11, 19),
     ]
+
+
+def test_vector_3d_distance_squared():
+    v1 = Vector3D(4, 2, 3)
+    v2 = Vector3D(2, 2, 2)
+    assert v1.distance_squared(v2) == 5

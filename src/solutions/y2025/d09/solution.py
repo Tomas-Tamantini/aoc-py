@@ -3,11 +3,7 @@ from itertools import combinations
 from src.core.io_handler import IOHandler
 from src.solutions.shared.geometry import Vector2D
 from src.solutions.shared.parser import parse_csv
-
-
-def _rectangle_area(corner_a: Vector2D, corner_b: Vector2D) -> int:
-    diff = corner_a - corner_b
-    return (abs(diff.x) + 1) * (abs(diff.y) + 1)
+from src.solutions.y2025.d09.logic.rectangle import Rectangle
 
 
 def solve(io_handler: IOHandler) -> None:
@@ -20,9 +16,12 @@ def solve(io_handler: IOHandler) -> None:
         )
     )
 
-    max_area = max(
-        _rectangle_area(*corners) for corners in combinations(positions, 2)
+    rectangles = sorted(
+        [Rectangle(*corners) for corners in combinations(positions, 2)],
+        key=lambda r: -r.area,
     )
+
+    max_area = rectangles[0].area
 
     io_handler.write_result(*prob_id, part=1, result=max_area)
     io_handler.write_result(*prob_id, part=2, result="not implemented")

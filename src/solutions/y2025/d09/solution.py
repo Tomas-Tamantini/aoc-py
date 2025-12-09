@@ -18,4 +18,5 @@ def solve(io_handler: IOHandler) -> None:
     max_area_p1 = rectangle_finder.largest_rectangle_area()
     io_handler.write_result(*prob_id, part=1, result=max_area_p1)
 
-    io_handler.write_result(*prob_id, part=2, result="not implemented")
+    max_area_p2 = rectangle_finder.largest_inscribed_rectangle_area()
+    io_handler.write_result(*prob_id, part=2, result=max_area_p2)

@@ -16,3 +16,8 @@ VERTICES = [
 def test_rectangle_finder_finds_largest_rectangle():
     finder = RectangleFinder(VERTICES)
     assert finder.largest_rectangle_area() == 50
+
+
+def test_rectangle_finder_finds_largest_inscribed_rectangle():
+    finder = RectangleFinder(VERTICES)
+    assert finder.largest_inscribed_rectangle_area() == 24

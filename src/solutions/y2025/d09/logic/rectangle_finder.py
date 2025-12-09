@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 from itertools import combinations
-from typing import Iterator
+from typing import Iterator, Optional
 
+from src.core.progress_monitor import ProgressMonitor
 from src.solutions.shared.geometry import Vector2D
 
 
@@ -89,9 +90,17 @@ class RectangleFinder:
             rectangle._segment_passes_inside(edge) for edge in self._edges()
         )
 
-    def largest_inscribed_rectangle_area(self) -> int:
+    def largest_inscribed_rectangle_area(
+        self, progress_monitor: Optional[ProgressMonitor] = None
+    ) -> int:
         sorted_rectangles = sorted(self._rectangles(), key=lambda r: -r.area)
-        for r in sorted_rectangles:
+        num_rectangles = len(sorted_rectangles)
+        step_granularity = 500
+        for i, r in enumerate(sorted_rectangles):
             if self._is_inscribed(r):
                 return r.area
+            if progress_monitor:
+                progress_monitor.update_progress_bar(
+                    i, num_rectangles, step_granularity
+                )
         raise ValueError("Could not find inscribed rectangle")

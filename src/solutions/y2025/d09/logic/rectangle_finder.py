@@ -50,7 +50,7 @@ class _Rectangle:
             and y_start < self._max_y
         )
 
-    def _segment_passes_inside(
+    def segment_passes_inside(
         self, segment: tuple[Vector2D, Vector2D]
     ) -> bool:
         diff = segment[0] - segment[1]
@@ -87,7 +87,7 @@ class RectangleFinder:
 
     def _is_inscribed(self, rectangle: _Rectangle) -> bool:
         return not any(
-            rectangle._segment_passes_inside(edge) for edge in self._edges()
+            rectangle.segment_passes_inside(edge) for edge in self._edges()
         )
 
     def largest_inscribed_rectangle_area(

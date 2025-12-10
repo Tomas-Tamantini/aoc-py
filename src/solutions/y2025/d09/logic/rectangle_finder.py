@@ -32,40 +32,16 @@ class _Rectangle:
     def _min_y(self) -> int:
         return min(self.corner_a.y, self.corner_b.y)
 
-    def _horizontal_segment_passes_inside(
-        self, x_start: int, x_end: int, y: int
-    ) -> bool:
-        return (
-            self._min_y < y < self._max_y
-            and x_end > self._min_x
-            and x_start < self._max_x
-        )
-
-    def _vertical_segment_passes_inside(
-        self, y_start: int, y_end: int, x: int
-    ) -> bool:
-        return (
-            self._min_x < x < self._max_x
-            and y_end > self._min_y
-            and y_start < self._max_y
-        )
-
     def segment_passes_inside(
         self, segment: tuple[Vector2D, Vector2D]
     ) -> bool:
-        diff = segment[0] - segment[1]
-        if diff.y == 0:
-            return self._horizontal_segment_passes_inside(
-                x_start=min(segment[0].x, segment[1].x),
-                x_end=max(segment[0].x, segment[1].x),
-                y=segment[0].y,
-            )
-        else:
-            return self._vertical_segment_passes_inside(
-                y_start=min(segment[0].y, segment[1].y),
-                y_end=max(segment[0].y, segment[1].y),
-                x=segment[0].x,
-            )
+        other = _Rectangle(*segment)
+        return (
+            other._max_x > self._min_x
+            and other._min_x < self._max_x
+            and other._max_y > self._min_y
+            and other._min_y < self._max_y
+        )
 
 
 class RectangleFinder:

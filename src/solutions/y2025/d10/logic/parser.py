@@ -1,13 +1,9 @@
-from dataclasses import dataclass
 from typing import Iterator
 
 from src.core.input_reader import InputReader
-
-
-@dataclass(frozen=True)
-class IndicatorLightsDiagram:
-    target_configuration: int
-    buttons: set[int]
+from src.solutions.y2025.d10.logic.indicator_lights import (
+    IndicatorLightsDiagram,
+)
 
 
 def _parse_target_configuration(raw_config: str) -> int:

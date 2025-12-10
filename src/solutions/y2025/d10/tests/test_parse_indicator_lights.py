@@ -1,5 +1,7 @@
-from src.solutions.y2025.d10.logic.parser import (
+from src.solutions.y2025.d10.logic.indicator_lights import (
     IndicatorLightsDiagram,
+)
+from src.solutions.y2025.d10.logic.parser import (
     parse_indicator_lights_diagrams,
 )
 

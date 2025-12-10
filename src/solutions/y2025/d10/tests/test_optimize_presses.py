@@ -1,9 +1,11 @@
 import pytest
 
 from src.solutions.y2025.d10.logic.machine import Machine
-from src.solutions.y2025.d10.logic.optimize_presses import (
-    min_presses_to_reach_joltage,
+from src.solutions.y2025.d10.logic.optimize_indicator_lights import (
     min_presses_to_turn_lights_on,
+)
+from src.solutions.y2025.d10.logic.optimize_joltage import (
+    min_presses_to_reach_joltage,
 )
 
 MACHINES = [

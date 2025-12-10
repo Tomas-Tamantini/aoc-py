@@ -2,6 +2,7 @@ import pytest
 
 from src.solutions.y2025.d10.logic.machine import Machine
 from src.solutions.y2025.d10.logic.optimize_presses import (
+    min_presses_to_reach_joltage,
     min_presses_to_turn_lights_on,
 )
 
@@ -30,3 +31,10 @@ MACHINES = [
 )
 def test_min_button_presses_to_turn_lights_on(machine, expected):
     assert min_presses_to_turn_lights_on(machine) == expected
+
+
+@pytest.mark.parametrize(
+    ("machine", "expected"), [(MACHINES[0], 10), (MACHINES[1], 12)]
+)
+def test_min_button_presses_to_reach_target_joltage(machine, expected):
+    assert min_presses_to_reach_joltage(machine) == expected

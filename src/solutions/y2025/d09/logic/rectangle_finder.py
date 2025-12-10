@@ -70,13 +70,11 @@ class RectangleFinder:
         self, progress_monitor: Optional[ProgressMonitor] = None
     ) -> int:
         sorted_rectangles = sorted(self._rectangles(), key=lambda r: -r.area)
-        num_rectangles = len(sorted_rectangles)
-        step_granularity = 500
         for i, r in enumerate(sorted_rectangles):
             if self._is_inscribed(r):
                 return r.area
             if progress_monitor:
                 progress_monitor.update_progress_bar(
-                    i, num_rectangles, step_granularity
+                    i, len(sorted_rectangles), step_granularity=500
                 )
         raise ValueError("Could not find inscribed rectangle")

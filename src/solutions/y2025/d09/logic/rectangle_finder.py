@@ -6,16 +6,16 @@ from src.solutions.shared.geometry import Vector2D
 
 class _Rectangle:
     def __init__(self, corner_a: Vector2D, corner_b: Vector2D):
-        self.corner_a = corner_a
-        self.corner_b = corner_b
-        self._max_x = max(self.corner_a.x, self.corner_b.x)
-        self._min_x = min(self.corner_a.x, self.corner_b.x)
-        self._max_y = max(self.corner_a.y, self.corner_b.y)
-        self._min_y = min(self.corner_a.y, self.corner_b.y)
+        self._corner_a = corner_a
+        self._corner_b = corner_b
+        self._max_x = max(self._corner_a.x, self._corner_b.x)
+        self._min_x = min(self._corner_a.x, self._corner_b.x)
+        self._max_y = max(self._corner_a.y, self._corner_b.y)
+        self._min_y = min(self._corner_a.y, self._corner_b.y)
 
     @property
     def area(self) -> int:
-        diff = self.corner_a - self.corner_b
+        diff = self._corner_a - self._corner_b
         return (abs(diff.x) + 1) * (abs(diff.y) + 1)
 
     def intersects(self, other: "_Rectangle") -> bool:

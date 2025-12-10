@@ -1,26 +1,32 @@
 import pytest
 
-from src.solutions.y2025.d10.logic.indicator_lights import (
-    IndicatorLightsDiagram,
-)
+from src.solutions.y2025.d10.logic.machine import Machine
 from src.solutions.y2025.d10.logic.optimize_presses import (
     min_presses_to_turn_lights_on,
 )
 
-DIAGRAMS = [
-    IndicatorLightsDiagram(
-        target_configuration=0b0110,
-        buttons={0b0001, 0b0101, 0b0010, 0b0011, 0b1010, 0b1100},
+MACHINES = [
+    Machine(
+        target_indicator_lights=(False, True, True, False),
+        button_wirings=((3,), (1, 3), (2,), (2, 3), (0, 2), (0, 1)),
+        target_joltage=(3, 5, 4, 7),
     ),
-    IndicatorLightsDiagram(
-        target_configuration=0b00010,
-        buttons={0b10111, 0b00110, 0b10001, 0b11100, 0b01111},
+    Machine(
+        target_indicator_lights=(False, False, False, True, False),
+        button_wirings=(
+            (0, 2, 3, 4),
+            (2, 3),
+            (0, 4),
+            (0, 1, 2),
+            (1, 2, 3, 4),
+        ),
+        target_joltage=(7, 5, 12, 7, 2),
     ),
 ]
 
 
 @pytest.mark.parametrize(
-    ("diagram", "expected"), [(DIAGRAMS[0], 2), (DIAGRAMS[1], 3)]
+    ("machine", "expected"), [(MACHINES[0], 2), (MACHINES[1], 3)]
 )
-def test_min_button_presses_to_turn_lights_on(diagram, expected):
-    assert min_presses_to_turn_lights_on(diagram) == expected
+def test_min_button_presses_to_turn_lights_on(machine, expected):
+    assert min_presses_to_turn_lights_on(machine) == expected

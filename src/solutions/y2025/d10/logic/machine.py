@@ -14,3 +14,7 @@ class Machine:
     @property
     def num_lights(self) -> int:
         return len(self.target_indicator_lights)
+
+    @property
+    def num_buttons(self) -> int:
+        return len(self.button_wirings)

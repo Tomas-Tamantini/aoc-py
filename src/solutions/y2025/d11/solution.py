@@ -8,7 +8,13 @@ def solve(io_handler: IOHandler) -> None:
 
     adjacencies = parse_adjacency_list(io_handler.input_reader(*prob_id))
 
-    n = num_paths(origin="you", destination="out", adjacencies=adjacencies)
+    n1 = num_paths("you", "out", adjacencies=adjacencies)
+    io_handler.write_result(*prob_id, part=1, result=n1)
 
-    io_handler.write_result(*prob_id, part=1, result=n)
-    io_handler.write_result(*prob_id, part=2, result="not implemented")
+    possible_paths = [
+        ("svr", "dac", "fft", "out"),
+        ("svr", "fft", "dac", "out"),
+    ]
+
+    n2 = sum(num_paths(*p, adjacencies=adjacencies) for p in possible_paths)
+    io_handler.write_result(*prob_id, part=2, result=n2)

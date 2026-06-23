@@ -51,5 +51,6 @@ def test_resource_gets_maximized(blueprint, expected_max_geodes):
         resource_to_maximize=ResourceType.GEODE,
         time_limit=24,
         blueprint=blueprint,
+        initial_fleet={ResourceType.ORE: 1},
     )
     assert max_geodes == expected_max_geodes

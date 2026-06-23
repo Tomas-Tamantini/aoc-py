@@ -3,6 +3,9 @@ from src.solutions.y2022.d19.logic.resource import ResourceType
 
 
 def maximize_resource(
-    resource_to_maximize: ResourceType, time_limit: int, blueprint: Blueprint
+    resource_to_maximize: ResourceType,
+    time_limit: int,
+    blueprint: Blueprint,
+    initial_fleet: dict[ResourceType, int],
 ) -> int:
     raise NotImplementedError()

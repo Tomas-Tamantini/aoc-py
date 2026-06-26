@@ -1,23 +1,21 @@
-import numpy as np
-from scipy.optimize import LinearConstraint, milp
-
+from src.solutions.shared.optimization.milp_model import MilpModel, Sense
 from src.solutions.y2025.d10.logic.machine import Machine
 
 
 def min_presses_to_reach_joltage(machine: Machine) -> int:
-    objective_coefficents = np.ones(machine.num_buttons)
-    integrality = np.ones_like(objective_coefficents)
-    A_eq = np.array(
-        [
-            [i in wiring for wiring in machine.button_wirings]
-            for i in range(machine.num_lights)
-        ]
-    )
-    b_eq = np.array(machine.target_joltage)
-    constraints = LinearConstraint(A_eq, b_eq, b_eq)
-    result = milp(
-        c=objective_coefficents,
-        integrality=integrality,
-        constraints=constraints,
-    )
-    return round(result.fun)
+    model = MilpModel()
+    x = [
+        model.add_variable(integer=True, lb=0)
+        for _ in range(machine.num_buttons)
+    ]
+
+    for i in range(machine.num_lights):
+        wired = sum(
+            x[b]
+            for b, wiring in enumerate(machine.button_wirings)
+            if i in wiring
+        )
+        model.add_constraint(wired == machine.target_joltage[i])  # type: ignore
+
+    model.set_objective(sum(x), sense=Sense.MINIMIZE)  # type: ignore
+    return round(model.solve())

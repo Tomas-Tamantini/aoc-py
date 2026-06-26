@@ -9,6 +9,7 @@ from src.solutions.y2022.d19.logic.resource_optimization import (
 
 def blueprint_1() -> Blueprint:
     return Blueprint(
+        id=1,
         costs={
             ResourceType.ORE: {ResourceType.ORE: 4},
             ResourceType.CLAY: {ResourceType.ORE: 2},
@@ -20,12 +21,13 @@ def blueprint_1() -> Blueprint:
                 ResourceType.ORE: 2,
                 ResourceType.OBSIDIAN: 7,
             },
-        }
+        },
     )
 
 
 def blueprint_2() -> Blueprint:
     return Blueprint(
+        id=2,
         costs={
             ResourceType.ORE: {ResourceType.ORE: 2},
             ResourceType.CLAY: {ResourceType.ORE: 3},
@@ -37,11 +39,10 @@ def blueprint_2() -> Blueprint:
                 ResourceType.ORE: 3,
                 ResourceType.OBSIDIAN: 12,
             },
-        }
+        },
     )
 
 
-@pytest.mark.skip("Not implemented yet")
 @pytest.mark.parametrize(
     ("blueprint", "expected_max_geodes"),
     [(blueprint_1(), 9), (blueprint_2(), 12)],

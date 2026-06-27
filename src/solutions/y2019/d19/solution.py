@@ -16,11 +16,12 @@ def _positions_inside_beam(
     animation_renderer: Optional[AnimationRenderer] = None,
 ) -> Iterator[Vector2D]:
     frame = ""
-    for y in range(area_size):
-        if not animation_renderer:
-            progress_monitor.update_progress_bar(
-                current_step=y + 1, total_steps=area_size
-            )
+    y_iterator = (
+        range(area_size)
+        if animation_renderer
+        else progress_monitor.track(range(area_size))
+    )
+    for y in y_iterator:
         for x in range(area_size):
             pos = Vector2D(x, y)
             if sensor.is_inside_beam(pos):

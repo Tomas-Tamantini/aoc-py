@@ -15,8 +15,7 @@ def solve(io_handler: IOHandler) -> None:
 
     progress_p1 = io_handler.progress_monitor(*prob_id, part=1)
     quality_sum = 0
-    for i, bp in enumerate(blueprints):
-        progress_p1.update_progress_bar(i, len(blueprints))
+    for bp in progress_p1.track(blueprints):
         quality_sum += bp.id * maximize_resource(
             resource_to_maximize=ResourceType.GEODE,
             time_limit=24,
@@ -28,8 +27,7 @@ def solve(io_handler: IOHandler) -> None:
     candidates = blueprints[:3]
     progress_p2 = io_handler.progress_monitor(*prob_id, part=2)
     geodes = []
-    for i, bp in enumerate(candidates):
-        progress_p2.update_progress_bar(i, len(candidates))
+    for bp in progress_p2.track(candidates):
         geodes.append(
             maximize_resource(
                 resource_to_maximize=ResourceType.GEODE,

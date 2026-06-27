@@ -28,11 +28,9 @@ def _num_matches(
     progress_monitor: ProgressMonitor,
 ) -> int:
     num_matches = 0
-    step_granularity = num_pairs // 100
-    for i in range(num_pairs):
+    for _ in progress_monitor.track(range(num_pairs)):
         if _terms_match(next(generator_a), next(generator_b)):
             num_matches += 1
-        progress_monitor.update_progress_bar(i, num_pairs, step_granularity)
     return num_matches
 
 

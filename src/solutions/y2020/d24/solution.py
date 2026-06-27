@@ -34,8 +34,7 @@ def solve(io_handler: IOHandler) -> None:
     progress_monitor = io_handler.progress_monitor(*prob_id, part=2)
     automaton = HexagonalAutomaton(alive_cells=black_tiles)
     num_iterations = 100
-    for i in range(num_iterations):
-        progress_monitor.update_progress_bar(i, num_iterations)
+    for _ in progress_monitor.track(range(num_iterations)):
         automaton = automaton.next_iteration()
     io_handler.write_result(
         *prob_id, part=2, result=automaton.num_black_tiles()

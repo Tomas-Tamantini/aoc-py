@@ -31,3 +31,16 @@ class BoundingBox:
     @property
     def max_y(self) -> int:
         return self._max_y
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, BoundingBox):
+            return NotImplemented
+        return (
+            self._min_x == other._min_x
+            and self._max_x == other._max_x
+            and self._min_y == other._min_y
+            and self._max_y == other._max_y
+        )
+
+    def __hash__(self) -> int:
+        return hash((self._min_x, self._max_x, self._min_y, self._max_y))

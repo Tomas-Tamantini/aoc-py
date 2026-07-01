@@ -133,6 +133,14 @@ def test_bounding_box_keeps_track_of_min_and_max_coordinates():
     assert b.max_x == 30
 
 
+def test_bounding_box_can_be_compared_for_equality():
+    b1 = BoundingBox(points={Vector2D(10, 20), Vector2D(9, 7)})
+    b2 = BoundingBox(points={Vector2D(10, 7), Vector2D(9, 20)})
+    b3 = BoundingBox(points={Vector2D(10, 20), Vector2D(8, 7)})
+    assert b1 == b2
+    assert b1 != b3
+
+
 @pytest.mark.parametrize(
     ("direction", "expected"),
     [

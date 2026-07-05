@@ -1,4 +1,3 @@
-from collections import defaultdict
 from typing import Iterator
 
 import pytest
@@ -6,6 +5,7 @@ import pytest
 from src.solutions.shared.graph import (
     DisjointSet,
     UndirectedGraph,
+    WeightedUndirectedGraph,
     bfs,
     dfs,
     min_path_length_with_bfs,
@@ -37,12 +37,12 @@ def test_undirected_graph_keeps_track_of_neighbors(simple_undirected_graph):
     assert not simple_undirected_graph.are_neighbors("A", "A")
 
 
-def test_dfs_visits_all_nodes_once(simple_undirected_graph) -> None:
+def test_dfs_visits_all_nodes_once(simple_undirected_graph):
     visited_nodes = "".join(dfs("A", simple_undirected_graph.neighbors))
     assert visited_nodes in {"ABDEC", "ACBDE"}
 
 
-def test_bfs_visits_all_nodes_once(simple_undirected_graph) -> None:
+def test_bfs_visits_all_nodes_once(simple_undirected_graph):
     visited_nodes = "".join(
         map(lambda c: c.node, bfs("A", simple_undirected_graph.neighbors))
     )
@@ -73,7 +73,7 @@ def undirected_graph():
     return graph
 
 
-def test_optimal_path_with_bfs(undirected_graph) -> None:
+def test_optimal_path_with_bfs(undirected_graph):
     assert 2 == min_path_length_with_bfs(
         start_node="A",
         is_final_state=lambda n: n in "FG",
@@ -81,16 +81,42 @@ def test_optimal_path_with_bfs(undirected_graph) -> None:
     )
 
 
-class _WeightedGraph:
-    def __init__(self):
-        self._adjacencies: dict[str, dict[str, int]] = defaultdict(dict)
+@pytest.fixture
+def simple_weighted_graph() -> WeightedUndirectedGraph[str]:
+    graph: WeightedUndirectedGraph[str] = WeightedUndirectedGraph()
+    graph.add_edge("A", "B", 3)
+    graph.add_edge("A", "C", 7)
+    graph.add_edge("B", "C", 1)
+    return graph
 
+
+def test_weighted_graph_keeps_track_of_nodes(simple_weighted_graph):
+    assert set(simple_weighted_graph.nodes()) == {"A", "B", "C"}
+
+
+def test_weighted_graph_keeps_track_of_edge_weight(simple_weighted_graph):
+    assert simple_weighted_graph.edge_weight("A", "B") == 3
+    assert simple_weighted_graph.edge_weight("A", "C") == 7
+    assert simple_weighted_graph.edge_weight("B", "C") == 1
+
+
+def test_weighted_graph_is_symmetric(simple_weighted_graph):
+    assert simple_weighted_graph.edge_weight("B", "A") == 3
+    assert simple_weighted_graph.edge_weight("C", "B") == 1
+
+
+def test_weighted_graph_indicates_whether_are_neighbors(simple_weighted_graph):
+    assert simple_weighted_graph.are_neighbors("A", "B")
+    assert not simple_weighted_graph.are_neighbors("A", "A")
+
+
+def test_weighted_graph_keeps_track_of_neighbors(simple_weighted_graph):
+    assert set(simple_weighted_graph.neighbors("A")) == {"B", "C"}
+
+
+class _WeightedGraph(WeightedUndirectedGraph[str]):
     def weighted_neighbors(self, node: str) -> Iterator[tuple[str, int]]:
-        yield from self._adjacencies[node].items()
-
-    def add_edge(self, node_a: str, node_b: str, weight: int) -> None:
-        self._adjacencies[node_a][node_b] = weight
-        self._adjacencies[node_b][node_a] = weight
+        yield from self._weights[node].items()
 
 
 def test_dijkstra_cannot_find_optimal_path_if_no_path_exists():

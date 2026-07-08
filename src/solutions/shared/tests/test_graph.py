@@ -5,6 +5,7 @@ import pytest
 from src.solutions.shared.graph import (
     DisjointSet,
     UndirectedGraph,
+    WeightedDirectedGraph,
     WeightedUndirectedGraph,
     bfs,
     dfs,
@@ -146,6 +147,50 @@ def test_optimal_path_with_dijkstra():
         weighted_neighbors=graph.weighted_neighbors,
     )
     assert path_length == 13
+
+
+@pytest.fixture
+def simple_weighted_directed_graph() -> WeightedDirectedGraph[str]:
+    graph: WeightedDirectedGraph[str] = WeightedDirectedGraph()
+    graph.add_edge("A", "B", 3)
+    graph.add_edge("B", "A", 2)
+    graph.add_edge("A", "C", 7)
+    graph.add_edge("B", "C", 1)
+    graph.add_edge("D", "A", 5)
+    return graph
+
+
+def test_weighted_directed_graph_keeps_track_of_nodes(
+    simple_weighted_directed_graph: WeightedDirectedGraph[str],
+):
+    assert set(simple_weighted_directed_graph.nodes()) == {"A", "B", "C", "D"}
+
+
+def test_weighted_directed_graph_keeps_track_of_edge_weight(
+    simple_weighted_directed_graph: WeightedDirectedGraph[str],
+):
+    assert simple_weighted_directed_graph.edge_weight("A", "B") == 3
+    assert simple_weighted_directed_graph.edge_weight("B", "A") == 2
+    assert simple_weighted_directed_graph.edge_weight("A", "C") == 7
+    assert simple_weighted_directed_graph.edge_weight("B", "C") == 1
+    assert simple_weighted_directed_graph.edge_weight("D", "A") == 5
+
+
+def test_weighted_directed_graph_has_edge(
+    simple_weighted_directed_graph: WeightedDirectedGraph[str],
+):
+    assert simple_weighted_directed_graph.has_edge("A", "C")
+    assert not simple_weighted_directed_graph.has_edge("C", "A")
+    assert not simple_weighted_directed_graph.has_edge("A", "A")
+
+
+def test_weighted_directed_graph_keeps_track_of_neighbors(
+    simple_weighted_directed_graph: WeightedDirectedGraph[str],
+):
+    assert set(simple_weighted_directed_graph.neighbors("A")) == {"B", "C"}
+    assert set(simple_weighted_directed_graph.neighbors("B")) == {"A", "C"}
+    assert set(simple_weighted_directed_graph.neighbors("C")) == set()
+    assert set(simple_weighted_directed_graph.neighbors("D")) == {"A"}
 
 
 def test_disjoint_set_starts_empty():

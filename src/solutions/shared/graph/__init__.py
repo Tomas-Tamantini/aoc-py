@@ -3,6 +3,9 @@ from src.solutions.shared.graph.dfs import dfs
 from src.solutions.shared.graph.dijkstra import min_path_length_with_dijkstra
 from src.solutions.shared.graph.disjoint_set import DisjointSet
 from src.solutions.shared.graph.undirected_graph import UndirectedGraph
+from src.solutions.shared.graph.weighted_directed_graph import (
+    WeightedDirectedGraph,
+)
 from src.solutions.shared.graph.weighted_undirected_graph import (
     WeightedUndirectedGraph,
 )
@@ -15,4 +18,5 @@ __all__ = [
     "DisjointSet",
     "UndirectedGraph",
     "WeightedUndirectedGraph",
+    "WeightedDirectedGraph",
 ]

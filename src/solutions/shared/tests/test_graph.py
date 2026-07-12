@@ -9,6 +9,7 @@ from src.solutions.shared.graph import (
     WeightedUndirectedGraph,
     bfs,
     dfs,
+    min_path_length_with_a_star,
     min_path_length_with_bfs,
     min_path_length_with_dijkstra,
 )
@@ -145,6 +146,47 @@ def test_optimal_path_with_dijkstra():
         start_node="A",
         is_final_state=lambda n: n == "C",
         weighted_neighbors=graph.weighted_neighbors,
+    )
+    assert path_length == 13
+
+
+def test_a_star_cannot_find_optimal_path_if_no_path_exists():
+    graph = _WeightedGraph()
+    with pytest.raises(ValueError, match="No path found"):
+        _ = min_path_length_with_a_star(
+            start_node="A",
+            is_final_state=lambda n: n == "B",
+            weighted_neighbors=graph.weighted_neighbors,
+            heuristic=lambda _n: 0,
+        )
+
+
+def test_optimal_path_with_a_star():
+    graph = _WeightedGraph()
+    graph.add_edge("A", "B", weight=3)
+    graph.add_edge("A", "D", weight=8)
+    graph.add_edge("B", "D", weight=5)
+    graph.add_edge("B", "E", weight=6)
+    graph.add_edge("D", "E", weight=3)
+    graph.add_edge("D", "F", weight=2)
+    graph.add_edge("E", "F", weight=1)
+    graph.add_edge("E", "C", weight=9)
+    graph.add_edge("F", "C", weight=3)
+
+    heuristic = {
+        "A": 11,
+        "B": 8,
+        "C": 0,
+        "D": 7,
+        "E": 4,
+        "F": 3,
+    }.__getitem__
+
+    path_length = min_path_length_with_a_star(
+        start_node="A",
+        is_final_state=lambda n: n == "C",
+        weighted_neighbors=graph.weighted_neighbors,
+        heuristic=heuristic,
     )
     assert path_length == 13
 

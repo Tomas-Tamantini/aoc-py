@@ -1,6 +1,6 @@
 import pytest
 
-from src.solutions.shared.number_theory.interval import Interval
+from src.solutions.shared.number_theory import Interval, sum_of_divisors
 
 
 def test_interval_size_is_member_count():
@@ -39,3 +39,11 @@ def test_interval_union_yields_new_interval_if_possible(
     interval_a, interval_b, intersection
 ):
     assert interval_a.union(interval_b) == intersection
+
+
+@pytest.mark.parametrize(
+    ("n", "expected_sum"),
+    [(1, 1), (6, 12), (12, 28), (28, 56), (1_000_000, 2480437)],
+)
+def test_sum_of_divisors(n, expected_sum):
+    assert sum_of_divisors(n) == expected_sum
